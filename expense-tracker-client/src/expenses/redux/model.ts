@@ -1,35 +1,42 @@
-import { action, ActionType } from "typesafe-actions"; // Awesome library for type-safe action creation
+import { ActionType, createAsyncAction, getType } from "typesafe-actions"; // Awesome library for type-safe action creation
 import { Expense } from "../utils/types";
 
-export interface ModelState {
+type ModelState = {
   expenses: Expense[];
   selectedExpense?: Expense;
-}
+};
 
-const initialState = {
+const initialState: ModelState = {
   expenses: [],
   selectedExpense: undefined,
 };
 
-/** Action payload interfaces
- */
+/* Action payload interfaces */
 interface IUpdateExpense {
   expense: Expense;
 }
 
-/** Expense Actions */
-const updateExpense = (p: IUpdateExpense) => action("UPDATE_EXPENSE", p);
+/* Expense Actions */
+const updateExpense = createAsyncAction(
+  "UPDATE_EXPENSE_REQUEST",
+  "UPDATE_EXPENSE_SUCCESS",
+  "UPDATE_EXPENSE_FAILURE"
+)<IUpdateExpense, Expense, Error>();
 
+export const actions = {
+  updateExpense: updateExpense,
+};
 //export type actions = { type: string; payload: IUpdateExpense };
 
-export type expenseActions = ActionType<typeof updateExpense>;
+export type expenseActions = ActionType<typeof actions>;
 
-export const expensesReducer = (
+const expensesReducer = (
   state: ModelState = initialState,
   action: expenseActions
 ) => {
   switch (action.type) {
-    case "UPDATE_EXPENSE":
+    case getType(updateExpense.request):
+      console.log(state.expenses, action.payload);
       return {
         ...state,
         expenses: state.expenses,
@@ -38,3 +45,5 @@ export const expensesReducer = (
       return state;
   }
 };
+
+export default expensesReducer;

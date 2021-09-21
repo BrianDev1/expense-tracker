@@ -1,12 +1,7 @@
-import { createStore, combineReducers } from "redux";
-import { expensesReducer } from "../expenses/redux/model";
+import { createStore } from "redux";
+import rootReducer from "./reducer";
 
-/**
- * Single Store for expansion
- * Just add reducers as the app expands
- */
-export const store = createStore(
-  combineReducers({
-    expenses: expensesReducer,
-  })
-);
+// Redux Store
+const store = createStore(rootReducer);
+
+export default store;
