@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { Expense } from "../utils/types";
 import CustomButton from "../components/CustomButton";
 import ExpenseTable from "../components/ExpenseTable";
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IExpenseTracker {
   readonly expenses: readonly Expense[];
+  readonly addNewExpense: 
 }
 
 const ExpenseTracker = ({ expenses }: IExpenseTracker) => {

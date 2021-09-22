@@ -1,6 +1,8 @@
 import { ActionType, createAsyncAction, getType } from "typesafe-actions"; // Awesome library for type-safe action creation
 import { Expense } from "../utils/types";
 
+/* Model - Contains Expenses Actions and reducer */
+
 export type ModelState = {
   readonly expenses: Expense[];
   readonly selectedExpense?: Expense;
@@ -23,11 +25,12 @@ const updateExpense = createAsyncAction(
   "UPDATE_EXPENSE_FAILURE"
 )<IUpdateExpense, Expense, Error>();
 
+// All Actions
 export const actions = {
   updateExpense: updateExpense,
 };
-//export type actions = { type: string; payload: IUpdateExpense };
 
+// Expense Actions Type
 export type expenseActions = ActionType<typeof actions>;
 
 const expensesReducer = (
