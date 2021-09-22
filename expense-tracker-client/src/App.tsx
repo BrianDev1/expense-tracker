@@ -1,13 +1,15 @@
 import React from "react";
+import AppContainer from "./common/AppContainer";
+import ExpenseHeader from "./common/ExpenseHeader";
 import ExpenseContainer from "./expenses/containers/ExpenseContainer";
 
 function App() {
   return (
-    <div>
-      <header>
-        <div>Hello</div>
+    <div style={undefined}>
+      <ExpenseHeader />
+      <AppContainer>
         <ExpenseContainer />
-      </header>
+      </AppContainer>
     </div>
   );
 }

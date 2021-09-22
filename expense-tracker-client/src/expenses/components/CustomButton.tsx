@@ -10,6 +10,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     buttonMain: {
       borderRadius: theme.spacing(1),
+      fontSize: "14px",
+      textTransform: "inherit",
     },
     greenVariant: {
       backgroundColor: theme.palette.success.light,

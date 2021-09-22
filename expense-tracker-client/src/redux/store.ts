@@ -6,6 +6,6 @@ import rootReducer from "./reducer";
 const store = createStore(rootReducer);
 
 // Issue getting typescript and Redux to work for useSelector
-export type RootState = StateType<typeof store.getState>;
+export type RootState = StateType<typeof rootReducer>;
 
 export default store;
