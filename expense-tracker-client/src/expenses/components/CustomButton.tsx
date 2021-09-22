@@ -46,6 +46,9 @@ interface ICustomButton {
   readonly disabled?: boolean;
 }
 
+/**
+ * Custom Expense Page Button
+ */
 const CustomButton = ({
   text,
   onclick,
