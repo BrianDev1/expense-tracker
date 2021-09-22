@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { Expense } from "../utils/types";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -17,9 +17,13 @@ interface IExpenseTracker {
 }
 
 const ExpenseTracker = ({ expenses }: IExpenseTracker) => {
-  return (
+  return expenses.length ? (
     <Grid container justifyContent="flex-start" alignItems="center">
       <Grid item></Grid>
+    </Grid>
+  ) : (
+    <Grid container justifyContent="center">
+      <Typography>{`No Expenses found`}</Typography>
     </Grid>
   );
 };

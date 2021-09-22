@@ -6,16 +6,25 @@ import clsx from "clsx";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     buttonMain: {
-      borderRadius: theme.spacing(0.5),
+      borderRadius: theme.spacing(1),
     },
     greenVariant: {
       backgroundColor: theme.palette.success.light,
+      "&:hover": {
+        backgroundColor: theme.palette.success.light,
+      },
     },
     yellowVariant: {
       backgroundColor: theme.palette.warning.light,
+      "&:hover": {
+        backgroundColor: theme.palette.warning.light,
+      },
     },
     redVariant: {
       backgroundColor: theme.palette.error.light,
+      "&:hover": {
+        backgroundColor: theme.palette.error.light,
+      },
     },
     whiteText: {
       color: theme.palette.common.white,
