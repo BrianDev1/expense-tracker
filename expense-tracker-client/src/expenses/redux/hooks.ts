@@ -1,6 +1,9 @@
 import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
-export const useExpenses = () => {
-  console.log(useSelector((s) => s));
-  return "Hello";
-};
+/**
+ * Custom Hook to get expenses
+ * @returns {Expense[]} Returns all Expenses
+ */
+export const useExpenses = () =>
+  useSelector((state: RootState) => state.expense.expenses);

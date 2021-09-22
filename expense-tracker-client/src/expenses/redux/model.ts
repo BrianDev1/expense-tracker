@@ -1,12 +1,12 @@
 import { ActionType, createAsyncAction, getType } from "typesafe-actions"; // Awesome library for type-safe action creation
 import { Expense } from "../utils/types";
 
-type ModelState = {
-  expenses: Expense[];
-  selectedExpense?: Expense;
+export type ModelState = {
+  readonly expenses: Expense[];
+  readonly selectedExpense?: Expense;
 };
 
-const initialState: ModelState = {
+export const initialState: ModelState = {
   expenses: [],
   selectedExpense: undefined,
 };

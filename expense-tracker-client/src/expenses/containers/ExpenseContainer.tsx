@@ -9,7 +9,7 @@ const ExpenseContainer = () => {
   const disptach = useDispatch();
   const expenses = useExpenses();
   const editExpense = compose(disptach, expenseActions.updateExpense.request);
-  return <ExpenseTracker expenses={[]} />;
+  return <ExpenseTracker expenses={expenses} />;
 };
 
 export default ExpenseContainer;
