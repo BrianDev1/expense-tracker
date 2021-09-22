@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Container, Grid, Typography } from "@material-ui/core";
 import { Expense } from "../utils/types";
+import CustomButton from "../../common/components/CustomButton";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -9,6 +10,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flex: 1,
       flexDirection: "row",
+    },
+    buttonCtn: {
+      width: theme.spacing(10),
     },
   })
 );
@@ -24,14 +28,23 @@ const ExpenseTracker = ({ expenses }: IExpenseTracker) => {
       <Grid container item xs={12}>
         <Typography variant="h4">Expense Tracker</Typography>
       </Grid>
+
+      <Grid container item xs={8}>
+        <Grid item xs={12}>
+          <Typography>{`The Sub-total of expenses is $${100}`}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography>{`The Total with taxes is $${100} `}</Typography>
+        </Grid>
+      </Grid>
       <Grid container>
-        <Grid container item xs={8}>
-          <Grid item xs={12}>
-            <Typography>{`The Sub-total of expenses is $${100}`}</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography>{`The Total with taxes is $${100} `}</Typography>
-          </Grid>
+        <Grid item className={classes.buttonCtn}>
+          <CustomButton
+            onclick={() => console.log("Clicked")}
+            variant={"Green"}
+            text={"Add new expense"}
+            fullWidth
+          />
         </Grid>
       </Grid>
       <Grid
