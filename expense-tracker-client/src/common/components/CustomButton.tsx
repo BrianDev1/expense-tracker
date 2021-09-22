@@ -3,6 +3,9 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import clsx from "clsx";
 
+// Because this button will be used in multiple places and with limited variants,
+// I created a custom button component that can be used throughout.
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     buttonMain: {
