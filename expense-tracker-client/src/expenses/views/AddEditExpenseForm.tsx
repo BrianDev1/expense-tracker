@@ -30,7 +30,7 @@ const AddEditExpenseForm = ({
       .max(40, "Too Long!")
       .required("Required"),
     amount: Yup.number()
-      .min(1, "Expense needs an amount!")
+      .min(1, "Expense needs more than 0!")
       .required("Required"),
   });
   return (
@@ -66,14 +66,7 @@ const AddEditExpenseForm = ({
           actions.setSubmitting(false);
         }}
       >
-        {({
-          setFieldValue,
-          setFieldTouched,
-          values,
-          errors,
-          touched,
-          isSubmitting,
-        }) => (
+        {({ handleChange, values, errors, touched, isSubmitting }) => (
           <Form>
             <Grid
               container
@@ -91,6 +84,7 @@ const AddEditExpenseForm = ({
                   required
                   id="description"
                   name="description"
+                  onChange={handleChange}
                   placeholder="Enter description"
                   value={values.description}
                   error={
@@ -109,8 +103,8 @@ const AddEditExpenseForm = ({
                   name="amount"
                   placeholder="Enter amount"
                   type={"number"}
-                  defaultValue={0}
                   value={values.amount}
+                  onChange={handleChange}
                   error={errors.amount && touched.amount ? true : false}
                   helperText={errors.amount}
                 />

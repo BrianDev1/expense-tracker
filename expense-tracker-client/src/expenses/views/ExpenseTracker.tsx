@@ -22,9 +22,20 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IExpenseTracker {
   readonly expenses: readonly Expense[];
   readonly addNewExpense: typeof modalActions.openAddNewExpense;
+  readonly editClicked: (expense: Expense) => void;
+  readonly deleteClicked: (id: number) => void;
+  readonly subTotal: number;
+  readonly total: number;
 }
 
-const ExpenseTracker = ({ expenses, addNewExpense }: IExpenseTracker) => {
+const ExpenseTracker = ({
+  expenses,
+  addNewExpense,
+  editClicked,
+  deleteClicked,
+  subTotal,
+  total,
+}: IExpenseTracker) => {
   const classes = useStyles();
 
   return (
@@ -35,10 +46,14 @@ const ExpenseTracker = ({ expenses, addNewExpense }: IExpenseTracker) => {
       <Grid container justifyContent="space-between" className={classes.margin}>
         <Grid container item xs={7} sm={8} spacing={1}>
           <Grid item xs={12}>
-            <Typography variant="caption">{`The Sub-total of expenses is $${100}`}</Typography>
+            <Typography variant="caption">{`The Sub-total of expenses is $${subTotal.toFixed(
+              2
+            )}`}</Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="caption">{`The Total with taxes is $${100} `}</Typography>
+            <Typography variant="caption">{`The Total with taxes is $${total.toFixed(
+              2
+            )}`}</Typography>
           </Grid>
         </Grid>
         <Grid container item xs={5} sm={4} className={classes.buttonCtn}>
@@ -50,7 +65,11 @@ const ExpenseTracker = ({ expenses, addNewExpense }: IExpenseTracker) => {
           />
         </Grid>
       </Grid>
-      <ExpenseTable expenses={expenses} />
+      <ExpenseTable
+        expenses={expenses}
+        editClicked={editClicked}
+        deleteClicked={deleteClicked}
+      />
     </Grid>
   );
 };

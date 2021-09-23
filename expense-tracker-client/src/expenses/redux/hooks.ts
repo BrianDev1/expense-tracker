@@ -4,9 +4,9 @@ import { Expense } from "../utils/types";
 
 /**
  * Custom Hook to get expenses
- * @returns {Expense[]} Returns all Expenses
+ * @returns { readonly Expense[]} Returns all Expenses
  */
-export const useExpenses = (): Expense[] =>
+export const useExpenses = (): readonly Expense[] =>
   useSelector((state: RootState) => state.expense.expenses);
 
 /**
