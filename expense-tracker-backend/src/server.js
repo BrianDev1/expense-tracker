@@ -20,19 +20,10 @@ const startApolloServer = async () => {
   //   next();
   // });
 
-  /* API Routes */
-
-  // app.use("/feed", feedRoutes);
-  // app.use("/auth", authRoutes);
   const server = new ApolloServer({ typeDefs, resolvers });
   await server.start(); // Required on new v3 of apollo-server
 
   server.applyMiddleware({ app });
-  app.use((error, req, res, next) => {
-    const status = error.statusCode || 500;
-    const message = error.message;
-    res.status(status).json({ message: message });
-  });
 
   app.listen(PORT, () =>
     console.log(`Express Server running on port ${PORT} ${server.graphqlPath}`)

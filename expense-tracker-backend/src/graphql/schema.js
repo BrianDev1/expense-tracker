@@ -4,7 +4,7 @@ const typeDefs = gql`
   scalar Date
 
   type Expense {
-    _id: Int!
+    id: String!
     description: String!
     amount: Int!
     date: Date!
@@ -16,7 +16,7 @@ const typeDefs = gql`
   }
 
   input InputUpdateExpense {
-    _id: Int!
+    id: String!
     description: String!
     amount: Int!
   }
@@ -34,7 +34,7 @@ const typeDefs = gql`
     # Update an expense returns the updated expense
     updateExpense(inputUpdateExpense: InputUpdateExpense!): Expense!
     # Delete expense returns Id of deleted expense
-    deleteExpense(id: Int!): Int!
+    deleteExpense(id: String!): String!
   }
 `;
 
