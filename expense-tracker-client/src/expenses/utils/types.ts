@@ -1,5 +1,5 @@
-/** Temp types
- *
+/**
+ * Temp types
  */
 export type Expense = {
   id: number;
