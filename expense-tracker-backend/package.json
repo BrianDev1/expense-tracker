@@ -1,0 +1,37 @@
+{
+  "name": "expense-tracker-backend",
+  "version": "1.0.0",
+  "description": "Backend for tracker",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrianDev1/expense-tracker.git"
+  },
+  "keywords": [
+    "Expense",
+    "Tracker",
+    "Backend"
+  ],
+  "author": "Brian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrianDev1/expense-tracker/issues"
+  },
+  "homepage": "https://github.com/BrianDev1/expense-tracker#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "apollo-server-express": "^3.3.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-validation": "^3.0.8",
+    "graphql": "^15.6.0",
+    "mongoose": "^6.0.7"
+  }
+}
