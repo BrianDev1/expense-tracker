@@ -1,4 +1,4 @@
-import { Dialog, Paper } from "@material-ui/core";
+import { Dialog } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -8,7 +8,8 @@ import { actions as modalActions } from "./redux/model";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: "800px",
+      width: "700px",
+      margin: "auto",
     },
   })
 );
@@ -30,7 +31,7 @@ const CustomModal = (props: React.PropsWithChildren<IModal>) => {
       maxWidth={"lg"}
       className={classes.root}
     >
-      <Paper>{props.children}</Paper>
+      {props.children}
     </Dialog>
   );
 };

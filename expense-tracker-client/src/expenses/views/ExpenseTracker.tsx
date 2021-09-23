@@ -4,6 +4,7 @@ import { Grid, Typography } from "@material-ui/core";
 import { Expense } from "../utils/types";
 import CustomButton from "../components/CustomButton";
 import ExpenseTable from "../components/ExpenseTable";
+import { actions as modalActions } from "../../modal/redux/model";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,10 +21,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IExpenseTracker {
   readonly expenses: readonly Expense[];
-  readonly addNewExpense: 
+  readonly addNewExpense: typeof modalActions.openAddNewExpense;
 }
 
-const ExpenseTracker = ({ expenses }: IExpenseTracker) => {
+const ExpenseTracker = ({ expenses, addNewExpense }: IExpenseTracker) => {
   const classes = useStyles();
 
   return (
@@ -42,7 +43,7 @@ const ExpenseTracker = ({ expenses }: IExpenseTracker) => {
         </Grid>
         <Grid container item xs={5} sm={4} className={classes.buttonCtn}>
           <CustomButton
-            onclick={() => console.log("Clicked")}
+            onclick={addNewExpense}
             variant={"Green"}
             text={"Add new expense"}
             fullWidth

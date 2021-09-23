@@ -1,19 +1,19 @@
 import React from "react";
 import { ActionType, action, Reducer } from "typesafe-actions"; // Awesome library for type-safe action creation
-import ExpenseContainer from "../../expenses/containers/ExpenseContainer";
+import AddEditExpenseContainer from "../../expenses/containers/AddEditExpenseContainer";
 import { Expense } from "../../expenses/utils/types";
 
-/* Model - Modal Actions and Reducer */
+/* Model - Modal Actions and Reducer are stored here */
 
 export type ModelState = {
   readonly modalType: "Dialog" | "Drawer"; // Can be extended
   readonly modalOpen: boolean;
-  modalContent: JSX.Element;
+  readonly modalContent: JSX.Element; // The component to display for a given modal (Posible anti-pattern) but it's great for use-case
 };
 
 export const initialState: ModelState = {
   modalType: "Dialog",
-  modalOpen: true,
+  modalOpen: false,
   modalContent: <></>,
 };
 
@@ -27,9 +27,11 @@ export const actions = {
   openUpdatedExpenseModal: (p: IUpdateExpenseModal) =>
     action("OPEN_EDIT_EXPENSE_MODAL", p),
   closeModal: () => action("CLOSE_MODAL"),
+  openAddNewExpense: () => action("OPEN_ADD_NEW_EXPENSE"),
 };
 
-// Expense Actions Type
+// Modal Actions Type exported to the rest of the App
+// Used in dispatches elsewhere in the App
 export type modalActions = ActionType<typeof actions>;
 
 const modalReducer: Reducer<ModelState, modalActions> = (
@@ -47,8 +49,14 @@ const modalReducer: Reducer<ModelState, modalActions> = (
       return {
         ...state,
         modalOpen: true,
-        modalType: "Dialog",
-        modalContent: <ExpenseContainer />,
+        modalContent: <AddEditExpenseContainer />,
+      };
+
+    case "OPEN_ADD_NEW_EXPENSE":
+      return {
+        ...state,
+        modalOpen: true,
+        modalContent: <AddEditExpenseContainer />,
       };
     default:
       return state;

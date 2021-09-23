@@ -14,6 +14,7 @@
     "@types/react-dom": "^17.0.9",
     "@types/redux-logger": "^3.0.9",
     "clsx": "^1.1.1",
+    "formik": "^2.2.9",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -23,7 +24,8 @@
     "redux-logger": "^3.0.6",
     "typesafe-actions": "^5.1.0",
     "typescript": "^4.4.3",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "yup": "^0.32.9"
   },
   "scripts": {
     "start": "react-scripts start",

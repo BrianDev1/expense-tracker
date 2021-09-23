@@ -43,9 +43,10 @@ const useStyles = makeStyles((theme: Theme) =>
 interface ICustomButton {
   readonly text: String;
   readonly onclick: () => void;
-  readonly variant: "Green" | "Yellow" | "Red";
+  readonly variant: "Green" | "Yellow" | "Red"; // Different variants for this app
   readonly fullWidth?: boolean;
   readonly disabled?: boolean;
+  readonly type?: "submit"; // Only Option if specified
 }
 
 /**
@@ -57,6 +58,7 @@ const CustomButton = ({
   variant,
   fullWidth,
   disabled,
+  type,
 }: ICustomButton) => {
   const classes = useStyles();
   return (
@@ -71,6 +73,7 @@ const CustomButton = ({
       onClick={onclick}
       fullWidth={fullWidth}
       disabled={disabled}
+      type={type}
     >
       {text}
     </Button>

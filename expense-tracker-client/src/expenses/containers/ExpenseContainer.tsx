@@ -13,8 +13,8 @@ import ExpenseTracker from "../views/ExpenseTracker";
 const ExpenseContainer = () => {
   const disptach = useDispatch();
   const expenses = useExpenses();
-  const editExpense = compose(disptach, modalActions.openUpdatedExpenseModal);
-  return <ExpenseTracker expenses={expenses} />;
+  const addNesExpense = compose(disptach, modalActions.openAddNewExpense);
+  return <ExpenseTracker expenses={expenses} addNewExpense={addNesExpense} />;
 };
 
 export default ExpenseContainer;

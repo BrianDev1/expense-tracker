@@ -8,3 +8,10 @@ import { Expense } from "../utils/types";
  */
 export const useExpenses = (): Expense[] =>
   useSelector((state: RootState) => state.expense.expenses);
+
+/**
+ * Custom Hook to get selected Expense
+ * @returns {Expense | undefined } Returns selected expense, undefined if no expense selected
+ */
+export const useSelectedExpense = (): Expense | undefined =>
+  useSelector((state: RootState) => state.expense.selectedExpense);
