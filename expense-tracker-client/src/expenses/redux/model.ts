@@ -1,3 +1,4 @@
+import { failure, loading, notAsked, RD, SRD, success } from "srd"; // Remote Data library
 import {
   ActionType,
   createAsyncAction,
@@ -6,17 +7,17 @@ import {
 } from "typesafe-actions"; // Awesome library for type-safe action creation
 import { modalActions } from "../../modal/redux/model";
 import { Expense } from "../utils/types";
-import { testExpenses } from "../utils/utils";
 
-/* Model - Contains Expenses Actions and reducer */
+/* Model FILE - Contains Expenses Actions and reducer */
 
+// EXPENSE STATE
 export type ModelState = {
-  readonly expenses: readonly Expense[];
+  readonly expenses: RD<Error, Expense[]>;
   readonly selectedExpense?: Expense;
 };
 
 export const initialState: ModelState = {
-  expenses: testExpenses,
+  expenses: notAsked(),
   selectedExpense: undefined,
 };
 
@@ -37,6 +38,13 @@ interface IDeleteExpense {
 }
 
 /* Expense Actions Defined as async actions */
+
+const fetchExpenses = createAsyncAction(
+  "FETCH_EXPENSE_REQUEST",
+  "FETCH_EXPENSE_SUCCESS",
+  "FETCH_EXPENSE_FAILURE"
+)<undefined, Expense[], Error>();
+
 const updateExpense = createAsyncAction(
   "UPDATE_EXPENSE_REQUEST",
   "UPDATE_EXPENSE_SUCCESS",
@@ -57,6 +65,7 @@ const deleteExpense = createAsyncAction(
 
 // All Actions grouped
 export const actions = {
+  fetchExpenses: fetchExpenses,
   updateExpense: updateExpense,
   createExpense: createExpense,
   deleteExpense: deleteExpense,
@@ -71,6 +80,27 @@ const expensesReducer: Reducer<ModelState, expenseActions | modalActions> = (
   action
 ) => {
   switch (action.type) {
+    /* Fetch All Expenses */
+    case getType(fetchExpenses.request):
+      return {
+        ...state,
+        expenses: loading(), // Setting state to loading
+      };
+
+    case getType(fetchExpenses.success):
+      return {
+        ...state,
+        expenses: success(action.payload), // Updating expenses with all expenses and setting state to success
+        selectedExpense: undefined, // Setting selected Expense back to undefined
+      };
+
+    case getType(fetchExpenses.failure):
+      return {
+        ...state,
+        expenses: failure(action.payload), // Setting the state to Failure
+        selectedExpense: undefined, // Setting selected Expense back to undefined
+      };
+
     /* Update Expense */
     case getType(updateExpense.request):
       return {
@@ -80,9 +110,24 @@ const expensesReducer: Reducer<ModelState, expenseActions | modalActions> = (
     case getType(updateExpense.success):
       return {
         ...state,
-        expenses: state.expenses.map((expense) => {
-          return expense.id === action.payload.id ? action.payload : expense;
-        }), // Updating expense in our current list of expenses
+        // Updating expense in our current list of expenses
+        // Have to do a MATCH to access the data in Success state
+        expenses: SRD.match(
+          {
+            notAsked: () => state.expenses,
+            loading: () => state.expenses,
+            failure: () => state.expenses,
+            success: (allExpenses) =>
+              success(
+                allExpenses.map((expense) => {
+                  return expense.id === action.payload.id
+                    ? action.payload
+                    : expense;
+                })
+              ),
+          },
+          state.expenses
+        ),
         selectedExpense: undefined, // Setting selected Expense back to undefined
       };
 
@@ -96,7 +141,16 @@ const expensesReducer: Reducer<ModelState, expenseActions | modalActions> = (
     case getType(createExpense.success):
       return {
         ...state,
-        expenses: [...state.expenses, action.payload], // Adding the created expense to our current list of expenses
+        //Have to do a MATCH to access the data in Success state
+        expenses: SRD.match(
+          {
+            notAsked: () => state.expenses,
+            loading: () => state.expenses,
+            failure: () => state.expenses,
+            success: (theExpenses) => success([...theExpenses, action.payload]),
+          },
+          state.expenses
+        ),
         selectedExpense: undefined,
       };
 
@@ -110,16 +164,26 @@ const expensesReducer: Reducer<ModelState, expenseActions | modalActions> = (
     case getType(deleteExpense.success):
       return {
         ...state,
-        expenses: state.expenses.filter(
-          (expense) => expense.id === action.payload
-        ), // Removing deleted expense from our list of expenses
+        // Removing deleted expense from our list of expenses
+        // Have to do a MATCH to access the data in Success state
+        expenses: SRD.match(
+          {
+            notAsked: () => state.expenses,
+            loading: () => state.expenses,
+            failure: () => state.expenses,
+            success: (myExpenses) =>
+              success(
+                myExpenses.filter((expense) => expense.id === action.payload)
+              ),
+          },
+          state.expenses
+        ),
         selectedExpense: undefined,
       };
 
-    // Added modal actions to this reducer
-    // When below action is called
-    // Have access to its payload
-    // Modal Action
+    /* Side Affect Actions (MODAL ACTIONS) */
+    // Possible anti-pattern but I wanted to use it to update expense `selectedExpense` state
+
     case "OPEN_EDIT_EXPENSE_MODAL":
       return {
         ...state,
