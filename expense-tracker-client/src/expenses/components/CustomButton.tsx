@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: theme.spacing(1),
       fontSize: "14px",
       textTransform: "inherit",
+      margin: theme.spacing(0.5),
     },
     greenVariant: {
       backgroundColor: theme.palette.success.light,

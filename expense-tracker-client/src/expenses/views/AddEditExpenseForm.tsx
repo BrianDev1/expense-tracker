@@ -50,7 +50,6 @@ const AddEditExpenseForm = ({
         }
         validationSchema={expenseFormSchema}
         onSubmit={(values, actions) => {
-          console.log({ values, actions });
           if (values.id && type === "Edit") {
             editSubmit({
               id: values.id,

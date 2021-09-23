@@ -17,11 +17,13 @@ const ExpenseContainer = () => {
   const disptach = useDispatch();
   const expenses = useExpenses();
   const addNewExpense = compose(disptach, modalActions.openAddNewExpense);
-  console.log("In here");
+  // Expense totals - this could be calculated in the backend and sent over
+  // for simplicity I'll leave it here
   const expenseSubtotal = useMemo(() => {
     return expenses.reduce((total, expense) => total + expense.amount, 0);
   }, [expenses]);
   const total = expenseSubtotal * TAX_RATE + expenseSubtotal;
+
   const handleDeleteClicked = (id: number) => {
     disptach(expenseActions.deleteExpense.request({ id: id }));
   };

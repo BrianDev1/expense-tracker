@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme: Theme) =>
     margin: {
       margin: theme.spacing(1, 0),
     },
-    h1: {},
     buttonCtn: {
       maxWidth: theme.spacing(25),
       maxHeight: theme.spacing(6),
