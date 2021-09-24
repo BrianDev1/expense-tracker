@@ -14,7 +14,10 @@ Full Stack SPA for tracking expenses.
 - Yup for frontend validation
 - Typesafe-actions (For typing actions)
 
-### Diagram
+### Commands
+- Client (npm start)
+- Backend (npm run dev)
 
+### Diagram
 
 ![Expense Tracker Flowchart](https://user-images.githubusercontent.com/30180095/134678898-070bd627-49d6-41df-a21c-16f3887c88fb.PNG)
