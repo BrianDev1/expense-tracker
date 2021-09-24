@@ -1,7 +1,7 @@
 import { Epic, ofType } from "redux-observable";
 import { of, catchError, switchMap } from "rxjs";
 import { getType } from "typesafe-actions";
-import { client } from "../../apollo/config"; //new client instance
+import { client } from "../../apollo/config";
 import {
   createExpense,
   deleteExpense,
@@ -11,10 +11,12 @@ import {
   IFetchExpensesData,
   IUpdateExpense,
   updateExpense,
-} from "../graphql/queriesAndMutations"; //mutation to do (using gql)
-import { actions as expensesActions, expenseActionsType } from "../redux/model"; //import actions to use in the epic
+} from "../graphql/queriesAndMutations";
+import { actions as expensesActions, expenseActionsType } from "../redux/model";
 
-/* First time using epics - Difficulty typing them */
+/* First time using epics - Difficulty typing them
+ * I Feel like all these Epics are similar in structure and can be consolidated somehow (Future improvement)
+ */
 
 export const fetchExpensesEpic: Epic<expenseActionsType, expenseActionsType> = (
   action$
@@ -50,7 +52,7 @@ export const createExpenseEpic: Epic<expenseActionsType, expenseActionsType> = (
         })
         .then(({ data }) =>
           data
-            ? expensesActions.createExpense.success(data.createExpense)
+            ? expensesActions.createExpense.success(data.createExpense) // Running into issue with mutations returning data?
             : expensesActions.createExpense.failure(
                 new Error("Error: Unable to return created expense.")
               )
@@ -103,7 +105,7 @@ export const deleteExpenceEpic: Epic<expenseActionsType, expenseActionsType> = (
         })
         .then(({ data }) => {
           return data
-            ? expensesActions.deleteExpense.success(data.deleteExpense) // Not sure why data is optional on mutations
+            ? expensesActions.deleteExpense.success(data.deleteExpense)
             : expensesActions.deleteExpense.failure(
                 new Error("Error: Unable to return deleted expense ID!")
               );
