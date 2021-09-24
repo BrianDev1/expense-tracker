@@ -7,6 +7,10 @@ Full Stack SPA for tracking expenses.
 - Backend: Node.js, Express, Apollo-GraphQL and MongoDB.
 - Front-end: React-typescript, Redux, Redux-Observables, RxJs, ApolloClient/GraphQL.
 
+## Requirements:
+
+- Need .env in root of backend with Mongodb Atlas URI
+
 ### Libraries used:
 
 - Formik (Frontend form)
