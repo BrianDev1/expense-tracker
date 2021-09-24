@@ -1,15 +1,17 @@
-import { failure, loading, notAsked, RD, SRD, success } from "srd"; // Remote Data library
+import { failure, loading, notAsked, RD, SRD, success } from "srd";
 import {
   ActionType,
   createAsyncAction,
   getType,
   Reducer,
-} from "typesafe-actions"; // Awesome library for type-safe action creation
+} from "typesafe-actions"; // Awesome library
 import { modalActions } from "../../modal/redux/model";
 import { Expense } from "../utils/types";
 
 /* Model FILE - Contains Expenses State, Actions and reducer
    all in single file for ease of reading
+
+   PS. (Sorry for all the comments. I just want you to understand without my explanation)
  */
 
 // EXPENSE STATE

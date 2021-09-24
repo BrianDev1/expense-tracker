@@ -1,5 +1,5 @@
 /**
- * Temp types
+ * Expense object type
  */
 export type Expense = {
   id: string;
