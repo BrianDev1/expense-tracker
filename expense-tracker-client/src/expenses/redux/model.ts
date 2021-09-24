@@ -14,11 +14,13 @@ import { Expense } from "../utils/types";
 export type ModelState = {
   readonly expenses: RD<Error, Expense[]>;
   readonly selectedExpense?: Expense;
+  readonly buttonIsSubmitting: boolean;
 };
 
 export const initialState: ModelState = {
   expenses: notAsked(),
   selectedExpense: undefined,
+  buttonIsSubmitting: false,
 };
 
 /* Action payload interfaces */
@@ -86,7 +88,6 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
         };
 
       case getType(fetchExpenses.success):
-        console.log(action.payload);
         return {
           ...state,
           expenses: success(action.payload), // Updating expenses with all expenses and setting state to success
@@ -104,6 +105,7 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
       case getType(updateExpense.request):
         return {
           ...state,
+          buttonIsSubmitting: true,
         };
 
       case getType(updateExpense.success):
@@ -128,13 +130,14 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
             state.expenses
           ),
           selectedExpense: undefined, // Setting selected Expense back to undefined
+          buttonIsSubmitting: false,
         };
 
       /* Create Expense */
       case getType(createExpense.request):
         return {
           ...state,
-          expenses: state.expenses,
+          buttonIsSubmitting: true,
         };
 
       case getType(createExpense.success):
@@ -152,13 +155,14 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
             state.expenses
           ),
           selectedExpense: undefined,
+          buttonIsSubmitting: false,
         };
 
       /* Delete Expense */
       case getType(deleteExpense.request):
         return {
           ...state,
-          expenses: state.expenses,
+          buttonIsSubmitting: true,
         };
 
       case getType(deleteExpense.success):
@@ -173,12 +177,13 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
               failure: () => state.expenses,
               success: (myExpenses) =>
                 success(
-                  myExpenses.filter((expense) => expense.id === action.payload)
+                  myExpenses.filter((expense) => expense.id !== action.payload)
                 ),
             },
             state.expenses
           ),
           selectedExpense: undefined,
+          buttonIsSubmitting: false,
         };
 
       /* Side Affect Actions (MODAL ACTIONS) */
@@ -195,6 +200,7 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
         return {
           ...state,
           selectedExpense: undefined,
+          buttonIsSubmitting: false,
         };
       default:
         return state;

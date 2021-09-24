@@ -55,8 +55,8 @@ export interface IUpdateExpense {
 }
 
 export const deleteExpense = gql`
-  mutation deleteExpense($deleteExpenseId: String!) {
-    deleteExpense(id: $deleteExpenseId)
+  mutation deleteExpense($id: String!) {
+    deleteExpense(id: $id)
   }
 `;
 

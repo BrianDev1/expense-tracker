@@ -7,8 +7,8 @@ import {
 } from "./expenseEpics";
 
 export const rootEpic = combineEpics(
+  deleteExpenceEpic,
   fetchExpensesEpic,
   createExpenseEpic,
-  updateExpenseEpic,
-  deleteExpenceEpic
+  updateExpenseEpic
 );

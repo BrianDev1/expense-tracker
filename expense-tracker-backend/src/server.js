@@ -11,15 +11,6 @@ const startApolloServer = async () => {
   DatabaseConnection(process.env.MONGODB_URI);
   const PORT = process.env.PORT || 4000;
 
-  // Setting public and allowing access
-  // CORS Headers
-  // app.use((req, res, next) => {
-  //   res.setHeader("Access-Control-Allow-Origin", "*");
-  //   res.setHeader("Access-Control-Allow-Methods", "GET, POST");
-  //   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  //   next();
-  // });
-
   const server = new ApolloServer({ typeDefs, resolvers });
   await server.start(); // Required on new v3 of apollo-server
 

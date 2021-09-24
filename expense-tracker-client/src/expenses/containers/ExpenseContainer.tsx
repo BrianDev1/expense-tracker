@@ -22,7 +22,7 @@ const ExpenseContainer = () => {
   const addNewExpense = compose(dispatch, modalActions.openAddNewExpense);
 
   // Expense totals - this could be calculated in the backend and sent over
-  // for simplicity I'll leave it here
+  // for simplicity I'll leave it here - UseMemo for re-renders
   const expenseSubtotal = useMemo(() => {
     return SRD.isSuccess(expenses) ? subtotalCalculator(expenses.data) : 0;
   }, [expenses]);

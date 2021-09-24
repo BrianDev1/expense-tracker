@@ -1,6 +1,7 @@
 import React from "react";
 import { ActionType, action, Reducer } from "typesafe-actions"; // Awesome library for type-safe action creation
 import AddEditExpenseContainer from "../../expenses/containers/AddEditExpenseContainer";
+import { expenseActionsType } from "../../expenses/redux/model";
 import { Expense } from "../../expenses/utils/types";
 
 /* Model - Modal Actions and Reducer are stored here */
@@ -34,7 +35,7 @@ export const actions = {
 // Used in dispatches elsewhere in the App
 export type modalActions = ActionType<typeof actions>;
 
-const modalReducer: Reducer<ModelState, modalActions> = (
+const modalReducer: Reducer<ModelState, modalActions | expenseActionsType> = (
   state = initialState,
   action
 ) => {
@@ -43,6 +44,7 @@ const modalReducer: Reducer<ModelState, modalActions> = (
       return {
         ...state,
         modalOpen: false,
+        modalContent: <></>,
       };
 
     case "OPEN_EDIT_EXPENSE_MODAL":
@@ -58,6 +60,12 @@ const modalReducer: Reducer<ModelState, modalActions> = (
         modalOpen: true,
         modalContent: <AddEditExpenseContainer />,
       };
+
+    /* When Successfully updated or created --> Close modal */
+    case "CREATE_EXPENSE_SUCCESS":
+      return { ...state, modalOpen: false, modalContent: <></> };
+    case "UPDATE_EXPENSE_SUCCESS":
+      return { ...state, modalOpen: false, modalContent: <></> };
     default:
       return state;
   }

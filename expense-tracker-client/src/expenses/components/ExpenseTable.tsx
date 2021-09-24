@@ -38,7 +38,6 @@ const ExpenseTable = ({
   deleteClicked,
 }: IExpenseTracker) => {
   const classes = useStyles();
-
   return (
     <Grid container className={classes.root}>
       {/** Table Column Headings  */}

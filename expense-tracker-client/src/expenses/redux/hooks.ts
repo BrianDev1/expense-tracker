@@ -37,3 +37,6 @@ export const useExpenses = () => {
  */
 export const useSelectedExpense = (): Expense | undefined =>
   useSelector((state: RootState) => state.expense.selectedExpense);
+
+export const useButtonState = () =>
+  useSelector((state: RootState) => state.expense.buttonIsSubmitting);

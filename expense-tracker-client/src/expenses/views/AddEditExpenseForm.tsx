@@ -5,12 +5,13 @@ import { Form, Formik } from "formik";
 import { Grid, InputLabel, TextField, Typography } from "@material-ui/core";
 import CustomButton from "../components/CustomButton";
 import * as Yup from "yup";
+import { useButtonState } from "../redux/hooks";
 
 interface IAddEditExpenseForm {
-  readonly selectedExpense?: Expense;
   readonly type: "Edit" | "Add";
   readonly editSubmit: typeof expenseActions.updateExpense.request;
   readonly createSubmit: typeof expenseActions.createExpense.request;
+  readonly selectedExpense?: Expense;
 }
 
 /**
@@ -23,6 +24,7 @@ const AddEditExpenseForm = ({
   createSubmit,
   type,
 }: IAddEditExpenseForm) => {
+  const buttonState = useButtonState();
   // Schema to validate form input
   const expenseFormSchema = Yup.object().shape({
     description: Yup.string()
@@ -62,7 +64,6 @@ const AddEditExpenseForm = ({
               amount: values.amount,
             });
           }
-          actions.setSubmitting(false);
         }}
       >
         {({ handleChange, values, errors, touched, isSubmitting }) => (
@@ -115,7 +116,7 @@ const AddEditExpenseForm = ({
                   variant="Green"
                   onclick={() => null}
                   text={"Save"}
-                  disabled={isSubmitting}
+                  disabled={buttonState}
                 />
               </Grid>
             </Grid>
