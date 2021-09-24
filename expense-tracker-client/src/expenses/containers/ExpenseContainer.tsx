@@ -6,7 +6,7 @@ import { actions as modalActions } from "../../modal/redux/model";
 import { actions as expenseActions } from "../redux/model";
 import ExpenseTracker from "../views/ExpenseTracker";
 import { Expense } from "../utils/types";
-import { TAX_RATE } from "../utils/utils";
+import { subtotalCalculator, TAX_RATE } from "../utils/utils";
 import { SRD } from "srd";
 import { CircularProgress } from "@material-ui/core";
 import ErrorPage from "../../common/ErrorPage";
@@ -17,24 +17,23 @@ import ErrorPage from "../../common/ErrorPage";
  * - Separates view from operations
  */
 const ExpenseContainer = () => {
-  const disptach = useDispatch();
+  const dispatch = useDispatch();
   const expenses = useExpenses();
-  const addNewExpense = compose(disptach, modalActions.openAddNewExpense);
+  const addNewExpense = compose(dispatch, modalActions.openAddNewExpense);
+
   // Expense totals - this could be calculated in the backend and sent over
   // for simplicity I'll leave it here
   const expenseSubtotal = useMemo(() => {
-    return SRD.isSuccess(expenses)
-      ? expenses.data.reduce((total, expense) => total + expense.amount, 0)
-      : 0;
+    return SRD.isSuccess(expenses) ? subtotalCalculator(expenses.data) : 0;
   }, [expenses]);
   const total = expenseSubtotal * TAX_RATE + expenseSubtotal;
 
-  const handleDeleteClicked = (id: number) => {
-    disptach(expenseActions.deleteExpense.request({ id: id }));
+  const handleDeleteClicked = (id: string) => {
+    dispatch(expenseActions.deleteExpense.request({ id: id }));
   };
 
   const handleEditClicked = (expense: Expense) => {
-    disptach(modalActions.openUpdatedExpenseModal({ expense: expense }));
+    dispatch(modalActions.openUpdatedExpenseModal({ expense: expense }));
   };
 
   return SRD.match(

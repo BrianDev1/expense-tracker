@@ -1,7 +1,7 @@
 import moment from "moment";
 import { Expense } from "./types";
 
-/** Constants App wide */
+/** Constants - App wide */
 export const TAX_RATE = 0.15;
 export const LOCALE = "en-US";
 export const dateTimeOptions = {
@@ -30,9 +30,12 @@ export const formatDate = (date: Date) => {
   return `${moment(date).format("YYYY-MM-DD [at] HH:mm")}`;
 };
 
-// DUMMY DATA
-export const testExpenses: readonly Expense[] = [
-  { id: 1, description: "Paper", amount: 10, date: new Date() },
-  { id: 2, description: "Burger", amount: 20, date: new Date() },
-  { id: 3, description: "Parking", amount: 5, date: new Date() },
-];
+/**
+ * @param expenses
+ * @returns subtotal of all expenses
+ */
+export const subtotalCalculator = (expenses: Expense[]) => {
+  return expenses.length
+    ? expenses.reduce((total, expense) => total + expense.amount, 0)
+    : 0;
+};

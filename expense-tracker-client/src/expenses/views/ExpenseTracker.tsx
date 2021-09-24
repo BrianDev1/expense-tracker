@@ -22,7 +22,7 @@ interface IExpenseTracker {
   readonly expenses: readonly Expense[];
   readonly addNewExpense: typeof modalActions.openAddNewExpense;
   readonly editClicked: (expense: Expense) => void;
-  readonly deleteClicked: (id: number) => void;
+  readonly deleteClicked: (id: string) => void;
   readonly subTotal: number;
   readonly total: number;
 }

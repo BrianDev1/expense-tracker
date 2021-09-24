@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { SRD } from "srd";
 import { RootState } from "../../redux/store";
 import { Expense } from "../utils/types";
-// @returns { readonly Expense[]} Returns all Expenses
+
 /**
  * Custom Hook to get expenses
- *
+ *  @returns Returns all Expenses in RemoteData type
  */
 export const useExpenses = () => {
   const dispatch = useDispatch();
@@ -15,13 +15,14 @@ export const useExpenses = () => {
     (state: RootState) => state.expense.expenses
   );
 
+  // Use effect to fetch all posts everytime the Remotedata state is notAsked --> Initialized
   useEffect(() => {
     SRD.match(
       {
-        notAsked: () => null, // dispatch(expensesActions.fetchExpenses.request), // Do Nothing
-        loading: () => null,
-        failure: () => null,
-        success: () => null,
+        notAsked: () => dispatch(expensesActions.fetchExpenses.request()), // Fetch all Expenses (Initial Page Load)
+        loading: () => null, // Do Nothing
+        failure: () => null, // Do Nothing
+        success: () => null, // Do Nothing
       },
       expensesRemoteDate
     );

@@ -23,7 +23,7 @@ export const initialState: ModelState = {
 
 /* Action payload interfaces */
 interface IUpdateExpense {
-  id: number;
+  id: string;
   description: string;
   amount: number;
 }
@@ -34,7 +34,7 @@ interface ICreateExpense {
 }
 
 interface IDeleteExpense {
-  id: number;
+  id: string;
 }
 
 /* Expense Actions Defined as async actions */
@@ -61,7 +61,7 @@ const deleteExpense = createAsyncAction(
   "DELETE_EXPENSE_REQUEST",
   "DELETE_EXPENSE_SUCCESS",
   "DELETE_EXPENSE_FAILURE"
-)<IDeleteExpense, number, Error>();
+)<IDeleteExpense, string, Error>();
 
 // All Actions grouped
 export const actions = {
@@ -86,6 +86,7 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
         };
 
       case getType(fetchExpenses.success):
+        console.log(action.payload);
         return {
           ...state,
           expenses: success(action.payload), // Updating expenses with all expenses and setting state to success

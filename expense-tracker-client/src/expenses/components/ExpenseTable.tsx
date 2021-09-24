@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IExpenseTracker {
   readonly expenses: readonly Expense[];
   readonly editClicked: (expense: Expense) => void;
-  readonly deleteClicked: (id: number) => void;
+  readonly deleteClicked: (id: string) => void;
 }
 /**
  * Custom Table component using GRID
@@ -38,6 +38,7 @@ const ExpenseTable = ({
   deleteClicked,
 }: IExpenseTracker) => {
   const classes = useStyles();
+
   return (
     <Grid container className={classes.root}>
       {/** Table Column Headings  */}
@@ -55,7 +56,7 @@ const ExpenseTable = ({
           <Typography>Date</Typography>
         </Grid>
       </Grid>
-      {/* Table Rows */}
+      {/* Custom Table Rows */}
       <Grid container className={classes.tableFeatures}>
         {expenses.length ? (
           expenses.map((expense, i) => (

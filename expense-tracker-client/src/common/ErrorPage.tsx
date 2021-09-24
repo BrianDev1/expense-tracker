@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex",
       flex: 1,
+      textAlign: "center",
     },
   })
 );
@@ -17,10 +18,16 @@ interface IErrorPage {
 }
 
 const ErrorPage = ({ code, message }: IErrorPage) => {
+  const classes = useStyles();
   return (
-    <Grid container justifyContent="center" spacing={4}>
+    <Grid
+      container
+      justifyContent="center"
+      className={classes.root}
+      spacing={4}
+    >
       <Grid item xs={12}>
-        <Typography variant={"h2"}>{`Error ${code}`}</Typography>
+        <Typography variant={"h2"}>{`${code}`}</Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography variant={"h5"}>{`${message}`}</Typography>

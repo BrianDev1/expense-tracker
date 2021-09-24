@@ -2,8 +2,8 @@
  * Temp types
  */
 export type Expense = {
-  id: number;
+  id: string;
+  description: string;
   amount: number;
   date: Date;
-  description: string;
 };

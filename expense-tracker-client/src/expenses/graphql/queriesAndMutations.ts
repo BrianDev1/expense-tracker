@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { Expense } from "../utils/types";
 
 // Fragment for code reusability
 export const ExpenseFragment = gql`
@@ -19,6 +20,10 @@ export const fetchExpenses = gql`
   }
   ${ExpenseFragment}
 `;
+// Return Data interface
+export interface IFetchExpensesData {
+  readonly fetchExpenses: Expense[];
+}
 
 /* MUTATIONS */
 export const createExpense = gql`
@@ -30,6 +35,11 @@ export const createExpense = gql`
   ${ExpenseFragment}
 `;
 
+// Return Data interface
+export interface ICreateExpense {
+  readonly createExpense: Expense;
+}
+
 export const updateExpense = gql`
   mutation updateExpense($inputUpdateExpense: InputUpdateExpense!) {
     updateExpense(inputUpdateExpense: $inputUpdateExpense) {
@@ -39,8 +49,18 @@ export const updateExpense = gql`
   ${ExpenseFragment}
 `;
 
+// Return Data interface
+export interface IUpdateExpense {
+  readonly updateExpense: Expense;
+}
+
 export const deleteExpense = gql`
   mutation deleteExpense($deleteExpenseId: String!) {
     deleteExpense(id: $deleteExpenseId)
   }
 `;
+
+// Return Data interface
+export interface IDeleteExpense {
+  readonly deleteExpense: string;
+}
