@@ -6,8 +6,8 @@ import { RootState } from "../../redux/store";
 import { Expense } from "../utils/types";
 
 /**
- * Custom Hook to get expenses
- *  @returns Returns all Expenses in RemoteData type
+ * Custom Hook to get Expenses Array
+ *  @returns Returns all Expenses in RemoteData type format
  */
 export const useExpenses = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ export const useExpenses = () => {
     (state: RootState) => state.expense.expenses
   );
 
-  // Use effect to fetch all posts everytime the Remotedata state is notAsked --> Initialized
+  // Use effect to fetch all posts everytime the Remotedata state is notAsked() === Initialized
   useEffect(() => {
     SRD.match(
       {
@@ -38,5 +38,9 @@ export const useExpenses = () => {
 export const useSelectedExpense = (): Expense | undefined =>
   useSelector((state: RootState) => state.expense.selectedExpense);
 
-export const useButtonState = () =>
+/**
+ * Custom Hook to get button state (Disabled --> true : false)
+ * @returns { boolean } Returns button disabled state
+ */
+export const useButtonState = (): boolean =>
   useSelector((state: RootState) => state.expense.buttonIsSubmitting);

@@ -25,7 +25,7 @@ const AddEditExpenseForm = ({
   type,
 }: IAddEditExpenseForm) => {
   const buttonState = useButtonState();
-  // Schema to validate form input
+  /* Schema to validate input*/
   const expenseFormSchema = Yup.object().shape({
     description: Yup.string()
       .min(4, "Too Short!")
@@ -66,15 +66,10 @@ const AddEditExpenseForm = ({
           }
         }}
       >
-        {({ handleChange, values, errors, touched, isSubmitting }) => (
+        {({ handleChange, values, errors, touched }) => (
           <Form>
-            <Grid
-              container
-              justifyContent="center"
-              alignItems="center"
-              spacing={3}
-            >
-              <Grid item xs={10}>
+            <Grid container justifyContent="center" alignItems="center">
+              <Grid item xs={10} style={{ height: "100px" }}>
                 <InputLabel htmlFor="description">
                   Expense Description
                 </InputLabel>
@@ -93,7 +88,7 @@ const AddEditExpenseForm = ({
                   helperText={errors.description}
                 />
               </Grid>
-              <Grid item xs={10}>
+              <Grid item xs={10} style={{ height: "100px" }}>
                 <InputLabel htmlFor="amount">Amount</InputLabel>
                 <TextField
                   fullWidth

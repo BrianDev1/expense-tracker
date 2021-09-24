@@ -8,11 +8,13 @@ import {
 import { modalActions } from "../../modal/redux/model";
 import { Expense } from "../utils/types";
 
-/* Model FILE - Contains Expenses Actions and reducer */
+/* Model FILE - Contains Expenses State, Actions and reducer
+   all in single file for ease of reading
+ */
 
 // EXPENSE STATE
 export type ModelState = {
-  readonly expenses: RD<Error, Expense[]>;
+  readonly expenses: RD<Error, Expense[]>; // RD ---> https://www.npmjs.com/package/srd?activeTab=readme   (Remote Data type)
   readonly selectedExpense?: Expense;
   readonly buttonIsSubmitting: boolean;
 };
@@ -76,7 +78,6 @@ export const actions = {
 // Expense Actions Type for import in other files
 export type expenseActionsType = ActionType<typeof actions>;
 
-/* EXPENSE REDUCER */
 const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
   (state = initialState, action) => {
     switch (action.type) {
@@ -90,7 +91,7 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
       case getType(fetchExpenses.success):
         return {
           ...state,
-          expenses: success(action.payload), // Updating expenses with all expenses and setting state to success
+          expenses: success(action.payload), // Updating expenses to success state with payload
           selectedExpense: undefined, // Setting selected Expense back to undefined
         };
 
@@ -98,20 +99,19 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
         return {
           ...state,
           expenses: failure(action.payload), // Setting the state to Failure
-          selectedExpense: undefined, // Setting selected Expense back to undefined
+          selectedExpense: undefined,
         };
 
       /* Update Expense */
       case getType(updateExpense.request):
         return {
           ...state,
-          buttonIsSubmitting: true,
+          buttonIsSubmitting: true, // Button will be disabled
         };
 
       case getType(updateExpense.success):
         return {
           ...state,
-          // Updating expense in our current list of expenses
           // Have to do a MATCH to access the data in Success state
           expenses: SRD.match(
             {
@@ -121,7 +121,7 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
               success: (allExpenses) =>
                 success(
                   allExpenses.map((expense) => {
-                    return expense.id === action.payload.id
+                    return expense.id === action.payload.id // Updating expense in state array
                       ? action.payload
                       : expense;
                   })
@@ -129,7 +129,13 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
             },
             state.expenses
           ),
-          selectedExpense: undefined, // Setting selected Expense back to undefined
+          selectedExpense: undefined,
+          buttonIsSubmitting: false, // Button Not disabled
+        };
+
+      case getType(updateExpense.failure):
+        return {
+          ...state,
           buttonIsSubmitting: false,
         };
 
@@ -158,18 +164,22 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
           buttonIsSubmitting: false,
         };
 
+      case getType(createExpense.failure):
+        return {
+          ...state,
+          buttonIsSubmitting: false,
+        };
+
       /* Delete Expense */
       case getType(deleteExpense.request):
         return {
           ...state,
-          buttonIsSubmitting: true,
         };
 
       case getType(deleteExpense.success):
         return {
           ...state,
-          // Removing deleted expense from our list of expenses
-          // Have to do a MATCH to access the data in Success state
+          // Removing deleted expense from expense state array
           expenses: SRD.match(
             {
               notAsked: () => state.expenses,
@@ -195,13 +205,13 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
           selectedExpense: action.payload.expense,
         };
 
-      // If modal closed, set selected back to initial state
       case "CLOSE_MODAL":
         return {
           ...state,
           selectedExpense: undefined,
           buttonIsSubmitting: false,
         };
+
       default:
         return state;
     }
