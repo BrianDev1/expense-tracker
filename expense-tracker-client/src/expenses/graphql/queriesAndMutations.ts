@@ -20,12 +20,13 @@ export const fetchExpenses = gql`
   }
   ${ExpenseFragment}
 `;
-// Return Data interface
+
 export interface IFetchExpensesData {
   readonly fetchExpenses: Expense[];
 }
 
 /* MUTATIONS */
+// CREATE
 export const createExpense = gql`
   mutation createExpense($inputCreateExpense: InputCreateExpense!) {
     createExpense(inputCreateExpense: $inputCreateExpense) {
@@ -35,11 +36,11 @@ export const createExpense = gql`
   ${ExpenseFragment}
 `;
 
-// Return Data interface
 export interface ICreateExpense {
   readonly createExpense: Expense;
 }
 
+// UPDATE
 export const updateExpense = gql`
   mutation updateExpense($inputUpdateExpense: InputUpdateExpense!) {
     updateExpense(inputUpdateExpense: $inputUpdateExpense) {
@@ -49,18 +50,17 @@ export const updateExpense = gql`
   ${ExpenseFragment}
 `;
 
-// Return Data interface
 export interface IUpdateExpense {
   readonly updateExpense: Expense;
 }
 
+// DELETE
 export const deleteExpense = gql`
   mutation deleteExpense($id: String!) {
     deleteExpense(id: $id)
   }
 `;
 
-// Return Data interface
 export interface IDeleteExpense {
   readonly deleteExpense: string;
 }
