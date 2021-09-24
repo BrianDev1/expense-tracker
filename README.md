@@ -4,8 +4,15 @@ Full Stack SPA for tracking expenses.
 
 ## Built with:
 
-- Backend: Node.js, Express, MongoDB NoSQL DB.
-- Front-end: React-typescript, Redux, Redux-Observables, RxJs, axios.
+- Backend: Node.js, Express, Apollo-GraphQL and MongoDB.
+- Front-end: React-typescript, Redux, Redux-Observables, RxJs, ApolloClient/GraphQL.
+
+### Libraries used:
+
+- Formik (Frontend form)
+- RD (Remote Data type structure)
+- Yup for frontend validation
+- Typesafe-actions (For typing actions)
 
 ### Diagram
 
