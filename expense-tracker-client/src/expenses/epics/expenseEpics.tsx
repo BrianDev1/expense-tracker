@@ -1,5 +1,5 @@
 import { Epic, ofType } from "redux-observable";
-import { of, catchError, switchMap } from "rxjs";
+import { of, catchError, switchMap, from } from "rxjs";
 import { getType } from "typesafe-actions";
 import { client } from "../../apollo/config";
 import {
@@ -98,21 +98,23 @@ export const deleteExpenceEpic: Epic<expenseActionsType, expenseActionsType> = (
   action$.pipe(
     ofType(getType(expensesActions.deleteExpense.request)),
     switchMap((action) =>
-      client
-        .mutate<IDeleteExpense>({
-          mutation: deleteExpense,
-          variables: { id: action.payload.id },
-        })
-        .then(({ data }) => {
-          return data
-            ? expensesActions.deleteExpense.success(data.deleteExpense)
-            : expensesActions.deleteExpense.failure(
-                new Error("Error: Unable to return deleted expense ID!")
-              );
-        })
-        .catch((error) => expensesActions.deleteExpense.failure(error))
+      from(
+        client
+          .mutate<IDeleteExpense>({
+            mutation: deleteExpense,
+            variables: { id: action.payload.id },
+          })
+          .then(({ data }) => {
+            return data
+              ? expensesActions.deleteExpense.success(data.deleteExpense)
+              : expensesActions.deleteExpense.failure(
+                  new Error("Error: Unable to return deleted expense ID!")
+                );
+          })
+          .catch((error) => expensesActions.deleteExpense.failure(error))
+      ).pipe()
     ),
     catchError((error) => {
-      return of(expensesActions.deleteExpense.failure(error));
+      return of(expensesActions.deleteExpense.failure(error)); // In dont think this error is needed? I'm not sure though...
     })
   );
