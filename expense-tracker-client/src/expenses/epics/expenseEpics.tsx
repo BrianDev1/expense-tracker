@@ -1,5 +1,5 @@
 import { Epic, ofType } from "redux-observable";
-import { of, catchError, switchMap, from } from "rxjs";
+import { of, catchError, switchMap } from "rxjs";
 import { getType } from "typesafe-actions";
 import { client } from "../../apollo/config";
 import {
@@ -13,6 +13,8 @@ import {
   updateExpense,
 } from "../graphql/queriesAndMutations";
 import { actions as expensesActions, expenseActionsType } from "../redux/model";
+
+/* 100% Work in progress file as I learn more about RxJs and Redux observables */
 
 /* First time using epics - Difficulty typing them
  * I Feel like all these Epics are similar in structure and can be consolidated somehow (Future improvement)
@@ -92,27 +94,26 @@ export const updateExpenseEpic: Epic<expenseActionsType, expenseActionsType> = (
   );
 
 /** Delete Expense Epic */
+
 export const deleteExpenceEpic: Epic<expenseActionsType, expenseActionsType> = (
   action$
 ) =>
   action$.pipe(
     ofType(getType(expensesActions.deleteExpense.request)),
     switchMap((action) =>
-      from(
-        client
-          .mutate<IDeleteExpense>({
-            mutation: deleteExpense,
-            variables: { id: action.payload.id },
-          })
-          .then(({ data }) => {
-            return data
-              ? expensesActions.deleteExpense.success(data.deleteExpense)
-              : expensesActions.deleteExpense.failure(
-                  new Error("Error: Unable to return deleted expense ID!")
-                );
-          })
-          .catch((error) => expensesActions.deleteExpense.failure(error))
-      ).pipe()
+      client
+        .mutate<IDeleteExpense>({
+          mutation: deleteExpense,
+          variables: { id: action.payload.id },
+        })
+        .then(({ data }) => {
+          return data
+            ? expensesActions.deleteExpense.success(data.deleteExpense)
+            : expensesActions.deleteExpense.failure(
+                new Error("Error: Unable to return deleted expense ID!")
+              );
+        })
+        .catch((error) => expensesActions.deleteExpense.failure(error))
     ),
     catchError((error) => {
       return of(expensesActions.deleteExpense.failure(error)); // In dont think this error is needed? I'm not sure though...
