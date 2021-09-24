@@ -1,4 +1,4 @@
-# expense-tracker
+# Expense-tracker
 
 Full Stack SPA for tracking expenses.
 
