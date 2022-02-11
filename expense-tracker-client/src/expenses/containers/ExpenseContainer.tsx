@@ -23,9 +23,7 @@ const ExpenseContainer = () => {
 
   // Expense totals - this could be calculated in the backend and sent over
   // for simplicity I'll leave it here - UseMemo for re-renders
-  const expenseSubtotal = useMemo(() => {
-    return SRD.isSuccess(expenses) ? subtotalCalculator(expenses.data) : 0;
-  }, [expenses]);
+  const expenseSubtotal = useMemo(() => SRD.unwrap(0, subtotalCalculator, expenses), [expenses]);
   const total = expenseSubtotal * TAX_RATE + expenseSubtotal;
 
   const handleDeleteClicked = (id: string) => {
