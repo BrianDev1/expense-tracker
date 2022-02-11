@@ -114,21 +114,8 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
       case getType(updateExpense.success):
         return {
           ...state,
-          // Have to do a MATCH to access the data in Success state
-          expenses: SRD.match(
-            {
-              notAsked: () => state.expenses,
-              loading: () => state.expenses,
-              failure: () => state.expenses,
-              success: (allExpenses) =>
-                success(
-                  allExpenses.map((expense) => {
-                    return expense.id === action.payload.id // Updating expense in state array
-                      ? action.payload
-                      : expense;
-                  })
-                ),
-            },
+          expenses: SRD.map(
+            allExpenses => allExpenses.map((expense) => expense.id === action.payload.id ? action.payload : expense), 
             state.expenses
           ),
           selectedExpense: undefined,
@@ -151,17 +138,7 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
       case getType(createExpense.success):
         return {
           ...state,
-          //Have to do a MATCH to access the data in Success state
-          expenses: SRD.match(
-            {
-              notAsked: () => state.expenses,
-              loading: () => state.expenses,
-              failure: () => state.expenses,
-              success: (theExpenses) =>
-                success([...theExpenses, action.payload]),
-            },
-            state.expenses
-          ),
+          expenses: SRD.map(theExpenses => [...theExpenses, action.payload], state.expenses),
           selectedExpense: undefined,
           buttonIsSubmitting: false,
         };
@@ -182,18 +159,7 @@ const expensesReducer: Reducer<ModelState, expenseActionsType | modalActions> =
         return {
           ...state,
           // Removing deleted expense from expense state array
-          expenses: SRD.match(
-            {
-              notAsked: () => state.expenses,
-              loading: () => state.expenses,
-              failure: () => state.expenses,
-              success: (myExpenses) =>
-                success(
-                  myExpenses.filter((expense) => expense.id !== action.payload)
-                ),
-            },
-            state.expenses
-          ),
+          expenses: SRD.map(myExpenses => myExpenses.filter((expense) => expense.id !== action.payload), state.expenses),
           selectedExpense: undefined,
           buttonIsSubmitting: false,
         };
